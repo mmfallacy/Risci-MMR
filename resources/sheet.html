@@ -1,0 +1,429 @@
+<html>
+	<head>
+		<meta id="viewport" content="width=device-width">
+		<style>
+			html, body{
+				overflow:hidden;
+			}
+			html,body,p,span,div,table,td,th {
+				-webkit-touch-callout: none; /* iOS Safari */
+				-webkit-user-select: none; /* Safari */
+				-khtml-user-select: none; /* Konqueror HTML */
+				-moz-user-select: none; /* Firefox */
+				-ms-user-select: none; /* Internet Explorer/Edge */
+				user-select: none; /* Non-prefixed version, currently
+									supported by Chrome and Opera */
+				}
+			@font-face {
+				font-family:"Bernadette";
+				src: url('../resources/fonts/bernadette.ttf') ;
+			}
+			@font-face {
+				font-family:"Bebas Neue Bold";
+				src: url('../resources/fonts/BebasNeue Bold.ttf');
+			}
+			body {
+				font-family:"Segoe UI";
+			}
+			input {
+				border: none;
+				width: 8vh;
+				font-size: 4vh;
+				font-family:"Century Gothic Medium";
+				color: black;
+				background:transparent;
+				text-align: right;
+			}
+			.h0{
+				font-size: 10vh;
+				text-align:center;
+				font-family: "Bernadette";
+				color: black;
+			}
+			.h1{
+				font-size: 6vh;
+				text-align:center;
+				font-family: "Bebas Neue Bold";
+				letter-spacing: 1vh;
+				color: white;
+			}
+			.h2{
+				font-size: 4vh;
+				text-align:center;
+				font-family: "Century Gothic Light";
+				color: rgb(128,128,128);
+			}
+			table{
+				border-collapse: collapse;
+			}
+			table, td, th{
+				border: 2vh solid rgb(63,63,63);
+				padding: 4vh;
+			}
+			
+			.tb th {
+			  padding-top: 12px;
+			  padding-bottom: 12px;
+			  background-color: rgb(89,89,89);
+			  text-align: left;
+			}
+			.tb tr:nth-child(even){
+				background-color: rgb(217,217,217);
+			}
+			.tb tr:nth-child(odd){
+				background-color: white;
+			}
+			.tb td:hover {background-color: rgb(150,150,150);}
+			span.h0{
+				margin: 10vh;
+			}
+			#br{
+				font-size: 2vh;
+			}
+			a:link , a:visited, a:focus{
+				font-size: 15vh;
+				font-family: "Segoe UI";
+				font-weight: bold;
+				color: rgb(217,217,217);
+				text-decoration: none;
+				outline: none;
+			}
+			a:hover{
+				color: gray;
+			}
+			a:active{
+				color: black;
+			}
+		</style>
+		<script type="text/javascript">
+			var scoreList = "error";
+			var thirty = [0,2];
+			var forty =	[1,3,4];
+			var male,female,pair
+			// scores:
+			function get(id){
+				return document.forms["sheet"][id].value;
+			}
+			function loadScores(inpScore){
+				female = inpScore.split('~')[0].split('-');
+				male = inpScore.split('~')[1].split('-');
+				pair = inpScore.split('~')[2].split('-');
+				
+				document.forms["sheet"]["CM1"].value = male[0];
+				document.forms["sheet"]["CM2"].value = male[1];
+				document.forms["sheet"]["CM3"].value = male[2];
+				document.forms["sheet"]["EM1"].value = male[3];
+				document.forms["sheet"]["EM2"].value = male[4];
+				document.forms["sheet"]["EM3"].value = male[5];
+				document.forms["sheet"]["CF1"].value = female[0];
+				document.forms["sheet"]["CF2"].value = female[1];
+				document.forms["sheet"]["CF3"].value = female[2];
+				document.forms["sheet"]["EF1"].value = female[3];
+				document.forms["sheet"]["EF2"].value = female[4];
+				document.forms["sheet"]["EF3"].value = female[5];
+				document.forms["sheet"]["T1"].value = pair[0];
+				document.forms["sheet"]["T2"].value = pair[1];
+				document.forms["sheet"]["T3"].value = pair[2];
+			}
+			function saveScores(){
+				female = [get("CF1"),get("CF2"),get("CF3"),get("EF1"),get("EF2"),get("EF3")];
+				male = [get("CM1"),get("CM2"),get("CM3"),get("EM1"),get("EM2"),get("EM3")];
+				pair = [get("T1"),get("T2"),get("T3")];
+				for(var i=0;i<6;i++){
+					if(isNaN(male[i])||isNaN(female[i])){
+						alert("Input Fields contain a non-integer value! Data will not be saved");
+						return scoreList;
+					}
+					if((male[i]==="")||(male[i]==="")){
+						alert("Some input fields are empty! Data will not be saved");
+						return scoreList;
+					}
+					if(parseInt(male[i])<0){
+							alert("Input Fields contain invalid number ( negative ).");
+							return scoreList;
+					}
+					if(parseInt(female[i])<0){
+							alert("Input Fields contain invalid number ( negative ).");
+							return scoreList;
+					}
+					if(thirty.includes(i)){
+						if(parseInt(male[i])>30){
+							alert("Input Fields contain invalid number ( > max score).");
+							return scoreList;
+						}
+						if(parseInt(female[i])>30){
+							alert("Input Fields contain invalid number ( > max score).");
+							return scoreList;
+						}
+					}
+					if(forty.includes(i)){
+						if(parseInt(male[i])>40){
+							alert("Input Fields contain invalid number ( > max score).");
+							return scoreList;
+						}
+						if(parseInt(female[i])>40){
+							alert("Input Fields contain invalid number ( > max score).");
+							return scoreList;
+						}
+					}
+					if(i==5){
+						if(parseInt(male[i])>20){
+							alert("Input Fields contain invalid number ( > max score).");
+							return scoreList;
+						}
+						if(parseInt(female[i])>20){
+							alert("Input Fields contain invalid number ( > max score).");
+							return scoreList;
+						}
+					}
+				}
+				for(var i=0;i<3;i++){
+					if(isNaN(pair[i])){
+						alert("Input Fields contain a non-integer value! Data will not be saved");
+						return scoreList;
+					}
+					if(parseInt(pair[i])<0){
+							alert("Input Fields contain invalid number ( negative ).");
+							return scoreList;
+					}
+					if(pair[i]===""){
+						alert("Some input fields are empty! Data will not be saved");
+						return scoreList;
+					}
+					if(thirty.includes(i)){
+						if(parseInt(pair[i])>30){
+							alert("Input Fields contain invalid number ( > max score).");
+							return scoreList;
+						}
+					}
+					if(forty.includes(i)){
+						if(parseInt(pair[i])>40){
+							alert("Input Fields contain invalid number ( > max score).");
+							return scoreList;
+						}
+					}
+					 	
+				}
+				scoreList = female.join("-")+"~"+male.join("-")+"~"+pair.join("-");
+				alert("Scores are saved.")
+				return scoreList;
+				
+			}
+			function raiseAlert(text){
+				alert(text);
+			}
+			function setBackground(palette){
+				document.body.style.background=palette;
+			}
+			function keydownHandler(e) {
+				var evt = e ? e:event;
+				var keyCode = evt.keyCode;
+
+				if (keyCode==38 || keyCode==39 || keyCode==40 || keyCode==37){ //arrow keys
+					e.preventDefault()
+					scrollTo(0,0);
+				}
+			}
+			function clearFields() { 
+				document.forms["sheet"]["CM1"].value = "";
+				document.forms["sheet"]["CM2"].value = "";
+				document.forms["sheet"]["CM3"].value = "";
+				document.forms["sheet"]["EM1"].value = "";
+				document.forms["sheet"]["EM2"].value = "";
+				document.forms["sheet"]["EM3"].value = "";
+				document.forms["sheet"]["CF1"].value = "";
+				document.forms["sheet"]["CF2"].value = "";
+				document.forms["sheet"]["CF3"].value = "";
+				document.forms["sheet"]["EF1"].value = "";
+				document.forms["sheet"]["EF2"].value = "";
+				document.forms["sheet"]["EF3"].value = "";
+				document.forms["sheet"]["T1"].value = "";
+				document.forms["sheet"]["T2"].value = "";
+				document.forms["sheet"]["T3"].value = "";
+			}
+			
+		</script>
+	</head>
+	<body>
+		<form class="form-inline" name="sheet" method = "POST" >
+			<div align="center">
+<! -- FIRST CATEGORY -->
+				<a tabindex="-1" href="#thematic">-</a><span class="h0" id="thematic">Thematic Wear:</span><a tabindex="-1" href="#casual">></a>	
+
+				<table class="tb">
+					<tr>
+						<th>
+							<p class="h1">CRITERIA</p>
+						</th>
+						<th >
+							<p class="h1">SCORE</p>
+						</th>
+					</tr>
+	<! -- FIRST CRITERIA -->
+					<tr>
+						<td>
+							<p class="h2">Creativeness</p>
+						</td>
+						<td>
+							<input tabindex="-1" type="text" name="T1"/>
+							<label class="h2">/30</label><br>
+						</td>
+					</tr>
+	<! -- SECOND CRITERIA -->				
+					<tr>
+						<td>
+							<p class="h2">Stage Presence / Stance</p>
+						</td>
+						<td>
+							<input tabindex="-1" type="text" name="T2"/>
+							<label class="h2">/40</label><br>
+						</td>
+					</tr>
+	<! -- THIRD CRITERIA -->				
+					<tr>
+						<td>
+							<p class="h2">Appropriateness</p>
+						</td>
+						<td>
+							<input tabindex="-1" type="text" name="T3"/>
+							<label class="h2">/30</label><br>
+						</td>
+					</tr>
+				</table>
+				<p id="br">&nbsp;</p>
+				<p id="br">&nbsp;</p>
+				<br>
+<! -- SECOND CATEGORY -->
+				<p id="br">&nbsp;</p>
+				<a tabindex="-1" href="#thematic"><</a><span class="h0" id="casual">Casual Wear:</span><a tabindex="-1" href="#evening">></a>			
+
+				<table class="tb">
+					<tr>
+						<th rowspan=2>
+							<p class="h1">CRITERIA</p>
+						</th>
+						<th colspan=2>
+							<p class="h1">SCORE</p>
+						</th>
+					</tr>
+	<! -- FIRST CRITERIA -->
+					<tr>
+						<th>
+							<p class="h1">Female</p>
+						</th>
+						<th>
+							<p class="h1">Male</p>
+						</th>
+					</tr>
+					<tr>
+						<td>
+							<p class="h2">Creativeness</p>
+						</td>
+						<td>
+							<input tabindex="-1" type="text" name="CF1"/>
+							<label class="h2">/30</label><br>
+						</td>
+						<td>
+							<input tabindex="-1" type="text" name="CM1"/>
+							<label class="h2">/30</label><br>
+						</td>
+					</tr>
+	<! -- SECOND CRITERIA -->				
+					<tr>
+						<td>
+							<p class="h2">Stage Presence / Stance</p>
+						</td>
+						<td>
+							<input tabindex="-1" type="text" name="CF2"/>
+							<label class="h2">/40</label><br>
+						</td>
+						<td>
+							<input tabindex="-1" type="text" name="CM2"/>
+							<label class="h2">/40</label><br>
+						</td>
+					</tr>
+	<! -- THIRD CRITERIA -->				
+					<tr>
+						<td>
+							<p class="h2">Appropriateness</p>
+						</td>
+						<td>
+							<input tabindex="-1" type="text" name="CF3"/>
+							<label class="h2">/30</label><br>
+						</td>
+						<td>
+							<input tabindex="-1" type="text" name="CM3"/>
+							<label class="h2">/30</label><br>
+						</td>
+					</tr>
+				</table>
+<! -- THIRD CATEGORY -->	
+			<p id="br">&nbsp;</p>
+			<a tabindex="-1" href="#casual"><</a><span class="h0" id="evening">Evening Wear:</span><a tabindex="-1" href="#evening">-</a>
+
+				<table class="tb">
+					<tr>
+						<th rowspan=2>
+							<p class="h1">CRITERIA</p>
+						</th>
+						<th colspan=2>
+							<p class="h1">SCORE</p>
+						</th>
+					</tr>
+	<! -- FIRST CRITERIA -->
+					<tr>
+						<th>
+							<p class="h1">Female</p>
+						</th>
+						<th>
+							<p class="h1">Male</p>
+						</th>
+					</tr>
+					<tr>
+						<td>
+							<p class="h2">Elegance</p>
+						</td>
+						<td>
+							<input tabindex="-1" type="text" name="EF1"/>
+							<label class="h2">/40</label><br>
+						</td>
+						<td>
+							<input tabindex="-1" type="text" name="EM1"/>
+							<label class="h2">/40</label><br>
+						</td>
+					</tr>
+	<! -- SECOND CRITERIA -->				
+					<tr>
+						<td>
+							<p class="h2">Stage Presence / Stance</p>
+						</td>
+						<td>
+							<input tabindex="-1" type="text" name="EF2"/>
+							<label class="h2">/40</label><br>
+						</td>
+						<td>
+							<input tabindex="-1" type="text" name="EM2"/>
+							<label class="h2">/40</label><br>
+						</td>
+					</tr>
+	<! -- THIRD CRITERIA -->				
+					<tr>
+						<td>
+							<p class="h2">Appropriateness</p>
+						</td>
+						<td>
+							<input tabindex="-1" type="text" name="EF3"/>
+							<label class="h2">/20</label><br>
+						</td>
+						<td>
+							<input tabindex="-1" type="text" name="EM3"/>
+							<label class="h2">/20</label><br>
+						</td>
+					</tr>
+				</table>				
+				<p id="br">&nbsp;</p>
+				<p id="br">&nbsp;</p>
+				
+			</div>
+	</body>
+</html>
